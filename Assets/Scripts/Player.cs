@@ -28,5 +28,18 @@ public class Player : MonoBehaviour
 
         Vector2 velocity = new Vector2(controlThrow * runSpeed, playerRigidBody.velocity.y);
         playerRigidBody.velocity = velocity;
+        FlipSprite();
+    }
+
+    private void FlipSprite()
+    {
+        //.Epsilon is used because the velocity can never be truly 0 from the controller?
+        bool runningHorizontally = Mathf.Abs(playerRigidBody.velocity.x) > Mathf.Epsilon;
+
+        if(runningHorizontally)
+        {
+            // Left -> -1 | Right -> 1 (Mathf.Sign(playerRigidBody.velocity.x))
+            transform.localScale = new Vector2(Mathf.Sign(playerRigidBody.velocity.x) ,1f);
+        }
     }
 }
