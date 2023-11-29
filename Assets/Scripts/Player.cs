@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float runSpeed = 5.5f;
     [SerializeField] float jumpSpeed = 16f;
+    [SerializeField] float climbSpeed = 4.5f;
 
     Rigidbody2D playerRigidBody;
     BoxCollider2D playerBoxCollider;
@@ -29,6 +30,26 @@ public class Player : MonoBehaviour
     {
         Run();
         Jump();
+        Climb();
+    }
+
+    private void Climb()
+    {
+        if (playerBoxCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        {
+            float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
+            Vector2 velocity = new Vector2(playerRigidBody.velocity.x, controlThrow * climbSpeed);
+            playerRigidBody.velocity = velocity;
+
+            bool isClimbing = Mathf.Abs(playerRigidBody.velocity.y) > Mathf.Epsilon;
+
+            //Play climbing animation if true...
+            playerAnimator.SetBool("Climbing", isClimbing);
+        }
+        else
+        {
+            playerAnimator.SetBool("Climbing", false);
+        }
     }
 
     private void Jump()
@@ -47,21 +68,15 @@ public class Player : MonoBehaviour
     private void Run()
     {
         float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal");
-
         Vector2 velocity = new Vector2(controlThrow * runSpeed, playerRigidBody.velocity.y);
         playerRigidBody.velocity = velocity;
 
         //.Epsilon is used because the velocity can never be truly 0 from the controller?
         bool runningHorizontally = Mathf.Abs(playerRigidBody.velocity.x) > Mathf.Epsilon;
 
-        UpdateRunningState(runningHorizontally);
+        //Play running animation if true...
+        playerAnimator.SetBool("Running", runningHorizontally);
         FlipSprite(runningHorizontally);
-    }
-
-    private void UpdateRunningState(bool isRunning)
-    {
-        //Run animation if running, not if not
-        playerAnimator.SetBool("Running", isRunning);
     }
 
     private void FlipSprite(bool isRunning)
