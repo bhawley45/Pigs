@@ -1668,9 +1668,9 @@ GameObject:
   - component: {fileID: 412224133}
   - component: {fileID: 412224138}
   - component: {fileID: 412224137}
-  - component: {fileID: 412224141}
   - component: {fileID: 412224140}
   - component: {fileID: 412224139}
+  - component: {fileID: 412224141}
   m_Layer: 7
   m_Name: Climbing
   m_TagString: Untagged
@@ -1901,20 +1901,26 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 412224141}
     m_ColliderPaths:
-    - - X: -52286548
-        Y: 8384185
-      - X: -57390024
-        Y: 8384185
-      - X: -57390024
-        Y: -37403084
-      - X: -52286548
-        Y: -37403084
+    - - X: -51250000
+        Y: -33750000
+      - X: -51250000
+        Y: 10000000
+      - X: -58437500
+        Y: 10000000
+      - X: -58437500
+        Y: -34062500
+      - X: -55312500
+        Y: -37187500
+      - X: -54687500
+        Y: -37187500
   m_CompositePaths:
     m_Paths:
-    - - {x: -5.228684, y: -3.7403085}
-      - {x: -5.228684, y: 0.8384185}
-      - {x: -5.7390027, y: 0.8383892}
-      - {x: -5.738973, y: -3.7403085}
+    - - {x: -5.468761, y: -3.71875}
+      - {x: -5.125, y: -3.3749893}
+      - {x: -5.125029, y: 1}
+      - {x: -5.84375, y: 0.99997073}
+      - {x: -5.8437424, y: -3.4062576}
+      - {x: -5.531239, y: -3.71875}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1946,8 +1952,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &412224141
-BoxCollider2D:
+--- !u!19719996 &412224141
+TilemapCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1978,19 +1984,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: -5.4838285, y: -1.4509449}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.51034737, y: 4.578727}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

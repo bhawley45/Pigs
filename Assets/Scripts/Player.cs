@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     BoxCollider2D playerBoxCollider;
     PolygonCollider2D playerFeetCollider;
     Animator playerAnimator;
+
+    //Original gravity from playerRigidbody
+    float startingGravity;
     
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,8 @@ public class Player : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerBoxCollider = GetComponent<BoxCollider2D>();
         playerFeetCollider = GetComponent<PolygonCollider2D>();
+
+        startingGravity = playerRigidBody.gravityScale;
     }
 
     // Update is called once per frame
@@ -43,11 +48,16 @@ public class Player : MonoBehaviour
 
             bool isClimbing = Mathf.Abs(playerRigidBody.velocity.y) > Mathf.Epsilon;
 
+            //Remove gravity from player rigidbody to prevent falling
+            playerRigidBody.gravityScale = 0f;
+
             //Play climbing animation if true...
             playerAnimator.SetBool("Climbing", isClimbing);
         }
         else
         {
+            //Reset player gravity and animation...
+            playerRigidBody.gravityScale = startingGravity;
             playerAnimator.SetBool("Climbing", false);
         }
     }
