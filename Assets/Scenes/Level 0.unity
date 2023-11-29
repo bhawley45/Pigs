@@ -1763,7 +1763,7 @@ GameObject:
   - component: {fileID: 1199210850}
   - component: {fileID: 1199210852}
   - component: {fileID: 1199210851}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2870,6 +2870,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5323363300807827128, guid: c349227e6cc53554f8011e370e63a1e6, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5323363300807827128, guid: c349227e6cc53554f8011e370e63a1e6, type: 3}
+      propertyPath: m_GravityScale
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5323363300807827128, guid: c349227e6cc53554f8011e370e63a1e6, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912772055736915146, guid: c349227e6cc53554f8011e370e63a1e6, type: 3}
+      propertyPath: runSpeed
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912772055736915146, guid: c349227e6cc53554f8011e370e63a1e6, type: 3}
+      propertyPath: jumpSpeed
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 5292950813791984650, guid: c349227e6cc53554f8011e370e63a1e6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
