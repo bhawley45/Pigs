@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    [SerializeField] float radius = 3f;
+    [SerializeField] Vector2 explosionForce = new Vector2(35f, 35f);
+    
     Animator bombAnimator;
     
     // Start is called before the first frame update
@@ -12,14 +15,21 @@ public class Bomb : MonoBehaviour
         bombAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void ExplodeBomb()
     {
-        
+        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Player"));
+
+        if (playerCollider)
+        {
+            //Kick back player on explosion
+            playerCollider.GetComponent<Rigidbody2D>().AddForce(explosionForce);
+            playerCollider.GetComponent<Player>().PlayerHit();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Start burning animation
         bombAnimator.SetTrigger("Burn");
     }
 
@@ -27,5 +37,11 @@ public class Bomb : MonoBehaviour
     {
         //gameObject represents the object the script is attached to
         Destroy(gameObject);
+    }
+
+    //Debug Visualized for AOE of bomb
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

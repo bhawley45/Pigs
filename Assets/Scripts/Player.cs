@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         isHurting = false;
     }
 
-    private void PlayerHit()
+    public void PlayerHit()
     {
         //Shoot the player the opposite direction they were facing at time of collision
         playerRigidBody.velocity = hitVelocity * new Vector2(-transform.localScale.x, 1f);
