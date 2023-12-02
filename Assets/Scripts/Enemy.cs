@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float enemyRunSpeed = 5f;
-    
+
     Rigidbody2D enemyRigidBody;
 
     // Start is called before the first frame update
@@ -24,18 +24,10 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        enemyRunSpeed *= -1; //Flip velocity on x axis
-        FlipSprite();
-    }
+        //Flip velocity on x axis
+        enemyRunSpeed *= -1;
 
-    private void FlipSprite()
-    {
+        //Flip Sprite
         transform.localScale = new Vector2(Mathf.Sign(enemyRigidBody.velocity.x), 1f);
-    }
-
-    private bool isFacingLeft()
-    {
-        //checks local scale x and returns true/false...
-        return transform.localScale.x < 0f;
     }
 }

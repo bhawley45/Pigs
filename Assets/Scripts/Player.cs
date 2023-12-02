@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] float runSpeed = 5.5f;
     [SerializeField] float jumpSpeed = 16f;
     [SerializeField] float climbSpeed = 4.5f;
+    [SerializeField] Vector2 hitVelocity = new Vector2(20f, 20f);
 
     Rigidbody2D playerRigidBody;
     BoxCollider2D playerBoxCollider;
@@ -17,6 +18,10 @@ public class Player : MonoBehaviour
 
     //Original gravity from playerRigidbody
     float startingGravity;
+    //Track if hit, used to momentarily disable movement
+    bool isHurting;
+    //Set delay from hit
+    float hurtDelay = 2f;
     
     // Start is called before the first frame update
     void Start()
@@ -33,9 +38,35 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Run();
-        Jump();
-        Climb();
+        if (!isHurting)
+        {
+            Run();
+            Jump();
+            Climb();
+
+            if (playerBoxCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+            {
+                PlayerHit();
+            }
+        }
+    }
+
+    //Coroutine used to delay player movement after taking damage
+    IEnumerator StopHurting()
+    {
+        yield return new WaitForSeconds(hurtDelay);
+        isHurting = false;
+    }
+
+    private void PlayerHit()
+    {
+        //Shoot the player the opposite direction they were facing at time of collision
+        playerRigidBody.velocity = hitVelocity * new Vector2(-transform.localScale.x, 1f);
+
+        //Play hit animation
+        playerAnimator.SetTrigger("Hitting");
+        isHurting = true;
+        StartCoroutine(StopHurting());
     }
 
     private void Climb()
@@ -96,5 +127,10 @@ public class Player : MonoBehaviour
             // Left -> -1 | Right -> 1 (Mathf.Sign(playerRigidBody.velocity.x))
             transform.localScale = new Vector2(Mathf.Sign(playerRigidBody.velocity.x) ,1f);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Test!");
     }
 }
