@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1b5219ef5170b419905201df74ffe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heartPickupSFX: {fileID: 8300000, guid: 90589ffa0c50e5146b7081db176f3f6b, type: 3}
 --- !u!95 &3417598169589338520
 Animator:
   serializedVersion: 5
