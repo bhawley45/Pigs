@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1576278477
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 774051007, guid: 7669c2e4fea4a344281e0deff4663efc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -165,3 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8472587111ea9e4fb2e3f60f902c9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 3
+  explosionForce: {x: 35, y: 35}
+  fuseBurnSFX: {fileID: 8300000, guid: 7e9079d4dfcea7c4292dfa3480799d31, type: 3}
+  explosionSFX: {fileID: 8300000, guid: ee7924bfd95abb448a670eb32dbaebb0, type: 3}

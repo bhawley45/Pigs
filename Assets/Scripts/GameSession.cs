@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public class GameSession : MonoBehaviour
 {
     [SerializeField] int playerLives = 3, score = 0;
-    [SerializeField] TextMeshProUGUI scoreText, livesText; 
+    [SerializeField] TextMeshProUGUI scoreText, livesText;
+    [SerializeField] Image[] Hearts;
 
     //Awake starts before the "Start()" Method
     private void Awake()
@@ -43,9 +44,39 @@ public class GameSession : MonoBehaviour
 
     public void AddToLives()
     {
+        //Check if at max hearts
+        if (playerLives >= 3) { return; }
+
         //Add life and update UI element
         playerLives++;
+        UpdateHearts();
         livesText.text = playerLives.ToString();
+    }
+
+    private void TakeLife()
+    {
+        //Remove player life and update UI element
+        playerLives--;
+        UpdateHearts();
+        //livesText.text = playerLives.ToString();
+    }
+
+    private void UpdateHearts()
+    {
+        //Check how many lives the player has
+        //Disable heart images based on that
+        
+        for(int i = 0; i < Hearts.Length; i++)
+        {
+            if(i < playerLives)
+            {
+                Hearts[i].enabled = true;
+            }
+            else
+            {
+                Hearts[i].enabled = false;
+            }
+        }
     }
 
     public void ProcessPlayerDeath()
@@ -67,12 +98,5 @@ public class GameSession : MonoBehaviour
 
         //Remove persistent stats
         Destroy( gameObject );
-    }
-
-    private void TakeLife()
-    {
-        //Remove player life and update UI element
-        playerLives--;
-        livesText.text = playerLives.ToString();
     }
 }

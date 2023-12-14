@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float enemyRunSpeed = 5f;
 
+    [SerializeField] AudioClip deathSFX;
+
     Rigidbody2D enemyRigidBody;
     Animator enemyAnimator;
 
@@ -31,6 +33,9 @@ public class Enemy : MonoBehaviour
     {
         //Play death animation
         enemyAnimator.SetTrigger("Die");
+
+        //Play death SFX
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, .5f);
 
         //Turn off colliders to prevent hitting player and movement
         GetComponent<CapsuleCollider2D>().enabled = false;

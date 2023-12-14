@@ -6,6 +6,9 @@ public class Bomb : MonoBehaviour
 {
     [SerializeField] float radius = 3f;
     [SerializeField] Vector2 explosionForce = new Vector2(35f, 35f);
+
+    [SerializeField] AudioClip fuseBurnSFX;
+    [SerializeField] AudioClip explosionSFX;
     
     Animator bombAnimator;
     
@@ -31,12 +34,18 @@ public class Bomb : MonoBehaviour
     {
         //Start burning animation
         bombAnimator.SetTrigger("Burn");
+        AudioSource.PlayClipAtPoint(fuseBurnSFX, Camera.main.transform.position);
     }
 
     void DestroyBomb()
     {
         //gameObject represents the object the script is attached to
         Destroy(gameObject);
+    }
+
+    void PlayExplosionSFX()
+    {
+        AudioSource.PlayClipAtPoint(explosionSFX, Camera.main.transform.position);
     }
 
     //Debug Visualized for AOE of bomb

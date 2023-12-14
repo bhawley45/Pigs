@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpSpeed = 16f;
     [SerializeField] float climbSpeed = 4.5f;
     [SerializeField] Vector2 hitVelocity = new Vector2(20f, 20f);
+    [SerializeField] float secToWait = .5f;
+
+    [SerializeField] AudioClip jumpingSFX, attackingSFX, deathSFX, gettingHitSFX, walkingSFX;
 
     [SerializeField] float attackRadius = .86f;
     [SerializeField] Transform hurtBox;
@@ -18,14 +22,12 @@ public class Player : MonoBehaviour
     BoxCollider2D playerBoxCollider;
     PolygonCollider2D playerFeetCollider;
     Animator playerAnimator;
+    AudioSource playerAudioSource;
 
-    //Original gravity from playerRigidbody
-    float startingGravity;
-    //Track if hit, used to momentarily disable movement
-    bool isHurting;
-    //Set delay from hit
-    float hurtDelay = 2f;
-    
+    float startingGravity; //Original gravity from playerRigidbody
+    bool isHurting; //Track if hit, used to momentarily disable movement
+    float hurtDelay = 1f; //Set delay from hit
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +36,12 @@ public class Player : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerBoxCollider = GetComponent<BoxCollider2D>();
         playerFeetCollider = GetComponent<PolygonCollider2D>();
+        playerAudioSource = GetComponent<AudioSource>();
 
         startingGravity = playerRigidBody.gravityScale;
+
+        //Initial animation when entering level
+        playerAnimator.SetTrigger("DoorExit");
     }
 
     // Update is called once per frame
@@ -60,13 +66,24 @@ public class Player : MonoBehaviour
     private void ExitLevel()
     {
         if (!playerBoxCollider.IsTouchingLayers(LayerMask.GetMask("Interactable"))) { return; }
-        
-        var exitDoor = FindObjectOfType<ExitDoor>();
 
         if (CrossPlatformInputManager.GetButtonDown("Vertical"))
         {
-            exitDoor.StartLoadingNextLevel();
+            playerAnimator.SetTrigger("DoorEnter");
+            //Check events on player animator on "DoorIn"
         }
+    }
+
+    //
+    public void LoadNextLevel()
+    {
+        FindObjectOfType<ExitDoor>().StartLoadingNextLevel();
+        TurnOffRenderer();
+    }
+
+    public void TurnOffRenderer()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     //Coroutine used to delay player movement after taking damage
@@ -82,6 +99,7 @@ public class Player : MonoBehaviour
         {
             //Play Attack Animation
             playerAnimator.SetTrigger("Attacking");
+            playerAudioSource.PlayOneShot(attackingSFX, .5f);
 
             Collider2D[] enemiesWithinRange = Physics2D.OverlapCircleAll(hurtBox.position, attackRadius, LayerMask.GetMask("Enemy"));
 
@@ -104,6 +122,7 @@ public class Player : MonoBehaviour
 
         //Play hit animation
         playerAnimator.SetTrigger("Hitting");
+        playerAudioSource.PlayOneShot(gettingHitSFX, .5f);
         isHurting = true;
         StartCoroutine(StopHurting());
     }
@@ -113,7 +132,8 @@ public class Player : MonoBehaviour
         if (playerBoxCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
             float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
-            Vector2 velocity = new Vector2(playerRigidBody.velocity.x, controlThrow * climbSpeed);
+            //Vector2 velocity = new Vector2(playerRigidBody.velocity.x, (controlThrow * climbSpeed) + playerRigidBody.velocity.y);
+            Vector2 velocity = new Vector2(playerRigidBody.velocity.x, (controlThrow * climbSpeed));
             playerRigidBody.velocity = velocity;
 
             bool isClimbing = Mathf.Abs(playerRigidBody.velocity.y) > Mathf.Epsilon;
@@ -134,14 +154,19 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        //Quick return if feet not touching ground layer
-        if(!playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
+        //Quick return if feet not touching ground/climbing layer
+        bool isTouchingGround = playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isTouchingBanner = playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Climbing"));
 
-        bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
-        if (isJumping)
+        if (isTouchingGround || isTouchingBanner)
         {
-            Vector2 jumpVelocity = new Vector2(playerRigidBody.velocity.x, jumpSpeed);
-            playerRigidBody.velocity = jumpVelocity;
+            bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
+            if (isJumping)
+            {
+                Vector2 jumpVelocity = new Vector2(playerRigidBody.velocity.x, jumpSpeed);
+                playerRigidBody.velocity = jumpVelocity;
+                playerAudioSource.PlayOneShot(jumpingSFX, 1);
+            }
         }
     }
 
@@ -157,6 +182,21 @@ public class Player : MonoBehaviour
         //Play running animation if true...
         playerAnimator.SetBool("Running", runningHorizontally);
         FlipSprite(runningHorizontally);
+    }
+
+    public void PlayWalkingSFX()
+    {
+        bool playerMovingHorizontally = Mathf.Abs(playerRigidBody.velocity.x) > Mathf.Epsilon;
+
+        if (playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            playerAudioSource.PlayOneShot(walkingSFX, .2f);
+        }
+        else
+        {
+            //Stop if player stops moving (sounds weird otherwise)
+            playerAudioSource.Stop();
+        }
     }
 
     private void FlipSprite(bool isRunning)
