@@ -17,7 +17,7 @@ TagManager:
   - World Confiner
   - Enemy
   - Bomb
-  - 
+  - Interactable
   - 
   - 
   - 
@@ -47,8 +47,14 @@ TagManager:
   - name: Background
     uniqueID: 3640933137
     locked: 0
+  - name: Decor
+    uniqueID: 1547534731
+    locked: 0
   - name: Climbing
     uniqueID: 4279056913
+    locked: 0
+  - name: Interactable
+    uniqueID: 1731563189
     locked: 0
   - name: Enemy
     uniqueID: 3012916931
@@ -61,4 +67,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 2973846845
+    locked: 0
+  - name: ForegroundNC
+    uniqueID: 602034353
     locked: 0

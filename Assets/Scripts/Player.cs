@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] float climbSpeed = 4.5f;
     [SerializeField] Vector2 hitVelocity = new Vector2(20f, 20f);
 
+    [SerializeField] float attackRadius = .86f;
+    [SerializeField] Transform hurtBox;
+ 
     Rigidbody2D playerRigidBody;
     BoxCollider2D playerBoxCollider;
     PolygonCollider2D playerFeetCollider;
@@ -43,11 +46,26 @@ public class Player : MonoBehaviour
             Run();
             Jump();
             Climb();
+            Atack();
 
             if (playerBoxCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
             {
                 PlayerHit();
             }
+
+            ExitLevel();
+        }
+    }
+
+    private void ExitLevel()
+    {
+        if (!playerBoxCollider.IsTouchingLayers(LayerMask.GetMask("Interactable"))) { return; }
+        
+        var exitDoor = FindObjectOfType<ExitDoor>();
+
+        if (CrossPlatformInputManager.GetButtonDown("Vertical"))
+        {
+            exitDoor.StartLoadingNextLevel();
         }
     }
 
@@ -58,8 +76,29 @@ public class Player : MonoBehaviour
         isHurting = false;
     }
 
+    private void Atack()
+    {
+        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+        {
+            //Play Attack Animation
+            playerAnimator.SetTrigger("Attacking");
+
+            Collider2D[] enemiesWithinRange = Physics2D.OverlapCircleAll(hurtBox.position, attackRadius, LayerMask.GetMask("Enemy"));
+
+            //Hit enemies within the attachRadius
+            foreach (var enemy in enemiesWithinRange)
+            {
+                enemy.GetComponent<Enemy>().Dying();
+            }
+
+        }
+    }
+
     public void PlayerHit()
     {
+        //Remove a life/Reset Game
+        FindAnyObjectByType<GameSession>().ProcessPlayerDeath();
+        
         //Shoot the player the opposite direction they were facing at time of collision
         playerRigidBody.velocity = hitVelocity * new Vector2(-transform.localScale.x, 1f);
 
@@ -131,6 +170,13 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Test!");
+        //Debug.Log("Test!");
+    }
+
+
+    //DEBUG for player attack
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(hurtBox.position, attackRadius);
     }
 }
