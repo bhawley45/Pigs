@@ -10,7 +10,7 @@ public class DiamondPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Play audio clip at the position of main camera
-        AudioSource.PlayClipAtPoint(diamondPickupSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(diamondPickupSFX, Camera.main.transform.position, .5f);
 
         FindObjectOfType<GameSession>().AddToScore(diamondValue);
 

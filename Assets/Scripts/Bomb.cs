@@ -45,7 +45,7 @@ public class Bomb : MonoBehaviour
 
     void PlayExplosionSFX()
     {
-        AudioSource.PlayClipAtPoint(explosionSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(explosionSFX, Camera.main.transform.position, .3f);
     }
 
     //Debug Visualized for AOE of bomb

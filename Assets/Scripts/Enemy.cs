@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         enemyAnimator.SetTrigger("Die");
 
         //Play death SFX
-        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, .5f);
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, .2f);
 
         //Turn off colliders to prevent hitting player and movement
         GetComponent<CapsuleCollider2D>().enabled = false;

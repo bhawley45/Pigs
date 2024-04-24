@@ -14,11 +14,11 @@ public class EnterDoor : MonoBehaviour
 
     void PlayOpeningDoorSFX()
     {
-        AudioSource.PlayClipAtPoint(doorOpenSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(doorOpenSFX, Camera.main.transform.position, .5f);
     }
 
     void PlayClosingDoorSFX()
     {
-        AudioSource.PlayClipAtPoint(doorOpenSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(doorOpenSFX, Camera.main.transform.position, .5f);
     }
 }

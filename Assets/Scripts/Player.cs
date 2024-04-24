@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -99,7 +98,7 @@ public class Player : MonoBehaviour
         {
             //Play Attack Animation
             playerAnimator.SetTrigger("Attacking");
-            playerAudioSource.PlayOneShot(attackingSFX, .5f);
+            playerAudioSource.PlayOneShot(attackingSFX, .45f);
 
             Collider2D[] enemiesWithinRange = Physics2D.OverlapCircleAll(hurtBox.position, attackRadius, LayerMask.GetMask("Enemy"));
 
@@ -122,7 +121,7 @@ public class Player : MonoBehaviour
 
         //Play hit animation
         playerAnimator.SetTrigger("Hitting");
-        playerAudioSource.PlayOneShot(gettingHitSFX, .5f);
+        playerAudioSource.PlayOneShot(gettingHitSFX, .3f);
         isHurting = true;
         StartCoroutine(StopHurting());
     }
@@ -165,7 +164,7 @@ public class Player : MonoBehaviour
             {
                 Vector2 jumpVelocity = new Vector2(playerRigidBody.velocity.x, jumpSpeed);
                 playerRigidBody.velocity = jumpVelocity;
-                playerAudioSource.PlayOneShot(jumpingSFX, 1);
+                playerAudioSource.PlayOneShot(jumpingSFX, .7f);
             }
         }
     }
