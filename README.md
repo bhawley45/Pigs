@@ -18,15 +18,15 @@ This game was developed using Unity 2022.3.13f1
 
 ## Art Assets
 
-The "Kings and Pigs" asset pack from itch.io lays groundwork for the game. After doing some staging for the levels I decided to add some custom sprites and animations to help blend the environment. I decided to use GIMP, which I was fairly new to at the time, but the challenge of matching the art style of the original pack was a fun learning experience.
+This project primarily uses assets from the "Kings and Pigs" pack from itch.io. After doing some staging for the levels though I decided to add some custom sprites and animations to help blend the environment. I used GIMP, which I was fairly new to at the time, but the challenge of matching the art style of the original pack was a fun learning experience.
 
 ## Game Development
 
-This project was fairly straight-forward but I had to learn some previously unknown features of Unity to fit my vision for the game. Most notable were: sprite maps, custom UI elements, sound effects, and the Cinemachine state-driven camera system.
+Development was fairly straightforward, including blocking levels, asset design, and implementation, and scripting. However, I had to learn some previously unknown features of Unity to fit my vision for the game, most notably sprite maps, custom UI elements, sound effects, and the Cinemachine state-driven camera system.
 
 ## Challenges and Learnings
 
-The hardest challenge encountered was trying to use Unity's Cinemachine camera system, which I was able to improve in my next projects. The only other hurdle, as stated earlier, was creating pixel art in a similar style to the original asset pack.
+The hardest challenge encountered was trying to use Unity's Cinemachine camera system, which I was able to improve in subsequent projects. The only other hurdle, as stated earlier, was creating pixel art in a similar style to the original asset pack.
 
 ## How to Play
 
