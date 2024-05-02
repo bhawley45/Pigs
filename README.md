@@ -36,11 +36,24 @@ To play "Pigs?," follow these simple steps:
 2. Unzip the downloaded file.
 3. Run the executable and dive into the adventure.
 
+---
+
+### Important Note on Windows SmartScreen Warning
+
+When you download and run this application, Windows may display a SmartScreen warning because the software is unsigned. This is a common warning for applications downloaded from the Internet and does not indicate any risk.
+
+To proceed with installing and running the game:
+
+1. Click on **More info**.
+2. Then click **Run anyway**.
+
+This will allow you to install and enjoy the game without any issues. Thank you for checking out my portfolio project!
+
+---
+
 ## Acknowledgments
 
 A heartfelt thank you to the creators of the "Kings and Pigs" asset pack, and to the open-source community behind GIMP for making the creation of this game possible.
-
-Enjoy your journey through the heart of the kingdom, and may your adventure be as enlightening as the development was for me.
 
 ---
 
